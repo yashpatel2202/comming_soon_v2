@@ -17,6 +17,8 @@ renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.domElement.style.opacity = '0'; // Start hidden for fade-in
+renderer.domElement.style.transition = 'opacity 1s ease-in-out';
 container.appendChild(renderer.domElement);
 
 // -------------------------------------------------------------------------
@@ -112,6 +114,11 @@ loader.load(
         });
 
         scene.add(model);
+
+        // Fade in Canvas
+        setTimeout(() => {
+             renderer.domElement.style.opacity = '1';
+        }, 100);
         
         // Hide Loader
         const loaderElement = document.getElementById('loader');
