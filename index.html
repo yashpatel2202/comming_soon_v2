@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yash - Portfolio Under Construction</title>
+    <meta
+      name="description"
+      content="Portfolio under construction. Crafting a digital masterpiece. Check back soon."
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <div class="split-container">
+      <!-- Left Section -->
+      <div class="left-section">
+        <div class="decorative-mandala">
+          <img src="public/middle.png" alt="Mandala Pattern" />
+        </div>
+
+            <div class="text-overlays">
+                <div class="title-container">
+                    <div class="col-you-are">
+                        <div class="rotated-text orange">ARE</div>
+                        <div class="rotated-text orange">YOU</div>
+                    </div>
+                    <div class="col-the">
+                        <div class="rotated-text dark-bold">THE</div>
+                    </div>
+                    <div class="col-stack">
+                        <div class="stack-line dark">STONE</div>
+                        <div class="stack-line dark">CHISEL</div>
+                        <div class="stack-line orange">SCULPTURE</div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="model-container" id="canvas-container">
+            <!-- Three.js canvas will be injected here -->
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <div class="content-wrapper">
+          <div class="top-bar">
+            <div class="status-badge">PORTFOLIO UNDER CONSTRUCTION</div>
+          </div>
+
+          <div class="brand-section">
+            <img src="public/yash.png" alt="Yash Logo" class="brand-logo" />
+          </div>
+
+          <div class="hero-section">
+            <h1>Crafting a digital masterpiece.</h1>
+            <p class="subtext">
+              I am currently architecting my new portfolio. <br />Check back
+              soon for the full reveal.
+            </p>
+          </div>
+
+          <div class="contact-section">
+            <h2>CONTACT ME</h2>
+            <div class="contact-icons">
+              <a href="#" aria-label="Phone"
+                ><i class="fas fa-phone-alt"></i
+              ></a>
+              <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="selected-work-section">
+            <h2>SELECTED WORK</h2>
+            <div class="work-showcase">
+              <div class="work-item">
+                <img src="public/kflavor.png" alt="kflavor" />
+                <span class="work-label">kflavor</span>
+              </div>
+              <div class="work-item">
+                <img src="public/regenx.png" alt="REGENx" />
+                <span class="work-label">REGENx</span>
+              </div>
+              <div class="work-item placeholder">
+                <div class="placeholder-content">
+                  <span>More Work</span>
+                  <span class="coming-soon">COMING SOON</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

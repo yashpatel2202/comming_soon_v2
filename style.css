@@ -1,0 +1,337 @@
+:root {
+    --primary-orange: #FF8C00;
+    --text-dark: #1a1a1a;
+    --text-gray: #6e6e73;
+    --text-light-gray: #86868b;
+    --bg-white: #ffffff;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden; /* Prevent scrolling for the split screen effect */
+    background-color: var(--bg-white);
+}
+
+.split-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Left Section Styles */
+.left-section {
+    width: 40%;
+    position: relative;
+    background: linear-gradient(to bottom, #f9f9f9 75%, var(--primary-orange) 75%);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.decorative-mandala {
+    position: absolute;
+    top: 20%;
+    right: -10%; /* Bleed off the edge slightly */
+    width: 80%;
+    opacity: 0.1;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.decorative-mandala img {
+    width: 100%;
+    height: auto;
+}
+
+/* Text Overlays on Left */
+.text-overlays {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    z-index: 2;
+}
+
+.title-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px; /* Gap between the columns */
+}
+
+/* First Column: YOU ARE (Stacked Vertically, Rotated) */
+.col-you-are {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align to bottom of the block if needed, or start */
+    align-items: center;
+    gap: 15px; /* Space between YOU and ARE */
+}
+
+.rotated-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg); /* Text reads bottom to top */
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.rotated-text.orange {
+    color: var(--primary-orange);
+    font-size: 3.5rem;
+    letter-spacing: 2px;
+}
+
+/* Second Column: THE (Rotated) */
+.col-the {
+    display: flex;
+    align-items: flex-start; /* Align to top */
+    padding-top: 5px; 
+    height: 100%;
+}
+
+.rotated-text.dark-bold {
+    font-size: 3.5rem; /* Matching STONE size */
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    margin-top: 0; 
+}
+
+/* Third Column: Horizontal Stack */
+.col-stack {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+    padding-left: 5px;
+}
+
+.stack-line {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.stack-line.dark {
+    color: #1a1a1a;
+}
+
+.stack-line.orange {
+    color: var(--primary-orange);
+}
+
+/* 3D Model Container */
+.model-container {
+    width: 100%;
+    height: 100%; /* Changed from 80% to full height to allow better positioning via camera */
+    z-index: 10;
+    position: absolute; /* Changed from relative to absolute to overlay properly */
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto; /* Ensure controls work */
+}
+
+/* Ensure controls work */
+canvas {
+    outline: none;
+}
+
+/* Right Section Styles */
+.right-section {
+    width: 60%;
+    background-color: var(--bg-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8%;
+    position: relative;
+}
+
+.content-wrapper {
+    max-width: 600px;
+    /* width: 100%; */
+}
+
+.top-bar {
+    position: absolute;
+    top: 40px;
+    left: 8%;
+}
+
+.status-badge {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.brand-section {
+    margin-bottom: 2rem;
+}
+
+.brand-logo {
+    height: 80px; /* Adjust based on logo aspect ratio */
+    width: auto;
+}
+
+.hero-section {
+    margin-bottom: 3rem;
+}
+
+.hero-section h1 {
+    font-size: 2.8rem;
+    line-height: 1.2;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+}
+
+.subtext {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+/* Contact Section */
+.contact-section {
+    margin-bottom: 3rem;
+}
+
+.contact-section h2 {
+    font-size: 1rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.contact-icons a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    color: #999;
+    font-size: 1.2rem;
+    transition: all var(--transition-speed);
+}
+
+.contact-icons a:hover {
+    color: var(--primary-orange);
+    transform: translateY(-2px);
+}
+
+/* Selected Work Section */
+.selected-work-section {
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.selected-work-section h2 {
+    font-size: 1rem;
+    color: var(--primary-orange);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.work-showcase {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.work-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.work-item img {
+    height: 50px; /* Consistent height for logos */
+    width: auto;
+    object-fit: contain;
+}
+
+.work-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.placeholder-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.placeholder-content span:first-child {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.coming-soon {
+    font-size: 0.75rem;
+    color: var(--primary-orange);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Responsive Support */
+@media (max-width: 1024px) {
+    .text-overlays {
+        transform: scale(0.8);
+        left: 20px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .left-section {
+        width: 100%;
+        height: 60vh;
+        background: linear-gradient(to bottom, #f9f9f9 70%, var(--primary-orange) 70%);
+    }
+    
+    .right-section {
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    .top-bar {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 2rem;
+    }
+}
