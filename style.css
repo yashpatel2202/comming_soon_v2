@@ -382,6 +382,97 @@ canvas {
         position: relative;
         top: 0;
         left: 0;
-        margin-bottom: 2rem;
     }
+}
+
+/* Loader Styles */
+.loader-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; 
+    z-index: 20;
+    transition: opacity 0.5s ease-out;
+}
+
+/* 3D Cube Loader Styles */
+.cube-loader {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 2s infinite linear;
+}
+
+.cube-face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--primary-orange);
+    opacity: 0.8;
+    background: rgba(255, 140, 0, 0.1); /* Slight orange tint */
+}
+
+/* Face positioning */
+.cube-face.front  { transform: rotateY(0deg) translateZ(30px); }
+.cube-face.back   { transform: rotateY(180deg) translateZ(30px); }
+.cube-face.right  { transform: rotateY(90deg) translateZ(30px); }
+.cube-face.left   { transform: rotateY(-90deg) translateZ(30px); }
+.cube-face.top    { transform: rotateX(90deg) translateZ(30px); }
+.cube-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+@keyframes rotateCube {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* Loader Particles */
+.particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-orange);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.p1 { animation: particleFloat1 2s infinite ease-in-out; }
+.p2 { animation: particleFloat2 2.5s infinite ease-in-out 0.5s; }
+.p3 { animation: particleFloat3 2.2s infinite ease-in-out 1s; }
+.p4 { animation: particleFloat4 2.8s infinite ease-in-out 0.2s; }
+
+@keyframes particleFloat1 {
+    0% { transform: translate(-40px, -40px) scale(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(40px, 40px) scale(1); opacity: 0; }
+}
+
+@keyframes particleFloat2 {
+    0% { transform: translate(40px, -40px) scale(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(-40px, 40px) scale(1.2); opacity: 0; }
+}
+
+@keyframes particleFloat3 {
+    0% { transform: translate(-40px, 40px) scale(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(40px, -40px) scale(0.8); opacity: 0; }
+}
+
+@keyframes particleFloat4 {
+    0% { transform: translate(40px, 40px) scale(0); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translate(-40px, -40px) scale(1); opacity: 0; }
+}
+
+.loader-container.fade-out {
+    opacity: 0;
+    pointer-events: none;
 }

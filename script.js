@@ -107,6 +107,15 @@ loader.load(
 
         scene.add(model);
         
+        // Hide Loader
+        const loaderElement = document.getElementById('loader');
+        if (loaderElement) {
+            loaderElement.classList.add('fade-out');
+            setTimeout(() => {
+                loaderElement.style.display = 'none';
+            }, 500); // Wait for transition to finish
+        }
+
         // If the model has animations
         if (gltf.animations && gltf.animations.length) {
             mixer = new THREE.AnimationMixer(model);
