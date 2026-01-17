@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 // Setup
 const container = document.getElementById('canvas-container');
@@ -69,6 +69,12 @@ scene.add(shadowPlane);
 
 // Load 3D Model
 const loader = new GLTFLoader();
+
+// Optional: Provide a DRACOLoader instance to decode compressed mesh data
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath( 'https://unpkg.com/three@0.160.0/examples/jsm/libs/draco/' );
+loader.setDRACOLoader( dracoLoader );
+
 let mixer;
 let loadedModel; // Variable to store model for rotation
 
@@ -77,7 +83,7 @@ let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
 loader.load(
-    'public/sculpture.glb',
+    'public/sculpture_v2.glb',
     (gltf) => {
         const model = gltf.scene;
         loadedModel = model; // Store reference
