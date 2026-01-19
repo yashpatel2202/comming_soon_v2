@@ -238,11 +238,11 @@ canvas {
     width: 100%;
     display: flex;
     align-items: baseline; /* Strictly align on text baseline */
-    gap: 4rem; 
+    gap: 3rem; /* Reduced gap */
 }
 
 .contact-section h2 {
-    font-size: 2rem; 
+    font-size: 1.5rem; /* Reduced from 2rem */
     font-weight: 500;
     color: var(--primary-orange);
     margin-bottom: 0; 
@@ -252,7 +252,7 @@ canvas {
 
 .contact-icons {
     display: flex;
-    gap: 2.5rem; 
+    gap: 2rem; /* Reduced gap */
     align-items: baseline; /* Ensure icons align on baseline */
 }
 
@@ -263,7 +263,7 @@ canvas {
     width: auto;
     height: auto;
     color: #888888;
-    font-size: 2rem; /* Larger icons */
+    font-size: 1.5rem; /* Reduced from 2rem */
     text-decoration: none;
     transition: all var(--transition-speed);
 }
@@ -287,7 +287,7 @@ canvas {
 }
 
 .selected-work-section h1 {
-    font-size: 2rem;
+    font-size: 1.5rem; /* Reduced from 2rem */
     font-weight: 500;
     color: var(--primary-orange);
     margin-bottom: 1.5rem;
@@ -310,7 +310,7 @@ canvas {
 }
 
 .work-item img {
-    height: 10rem; /* Larger logos */
+    height: 6rem; /* Reduced from 10rem */
     width: auto;
     object-fit: contain;
     filter: none; 
@@ -318,7 +318,7 @@ canvas {
 }
 
 .work-label {
-    font-size: 1.1rem; /* Larger text */
+    font-size: 1rem; /* Reduced from 1.1rem */
     font-weight: 500;
     color: #333333;
     margin-top: 0.5rem; 
@@ -331,11 +331,11 @@ canvas {
     justify-content: flex-end; /* Align content to bottom */
     align-items: flex-start; /* Left Align Text */
     gap: 0;
-    height: 10rem; /* Match logo height (same as .work-item img height) */
+    height: 6rem; /* Match logo height (6rem) */
 }
 
 .placeholder-content span {
-    font-size: 1.8rem; /* Larger text */
+    font-size: 1.3rem; /* Reduced from 1.8rem */
     font-weight: 500;
     line-height: 1.2;
 }
@@ -361,14 +361,16 @@ canvas {
 }
 
 @media (max-width: 768px) {
-    body {
-        overflow-y: auto; /* Enable scrolling on mobile */
+    html, body {
+        overflow-y: auto !important; /* Force scrolling on mobile */
+        height: auto !important; /* Allow body to grow */
     }
 
     .split-container {
         flex-direction: column;
         height: auto;
         min-height: 100vh;
+        overflow: visible; /* Ensure content isn't clipped */
     }
 
     /* Left Section - Top Half on Mobile */
@@ -432,42 +434,47 @@ canvas {
     }
 
     /* Contact Section */
+    /* Contact Section */
+    /* Contact Section */
     .contact-section {
         flex-direction: column;
         gap: 1.5rem;
-        margin-bottom: 3rem;
+        margin-bottom: 3rem; /* Restored margin */
         align-items: center;
     }
 
     .contact-section h2 {
         margin-bottom: 0;
-        font-size: 1.5rem;
+        font-size: 1.5rem; /* Restored size */
+    }
+
+    .contact-icons a {
+        font-size: 2rem; /* Restored size (larger than desktop for touch) */
     }
 
     /* Selected Work */
-    /* Selected Work */
     .selected-work-section {
         height: auto;
-        padding: 40px 20px !important; /* Add side padding back for content */
+        padding: 40px 20px !important; /* Restored padding */
         background-color: #f7f7f7;
         align-items: center; 
         text-align: center;
     }
 
     .selected-work-section h1 {
-        font-size: 1.5rem; /* Reduced from desktop size */
+        font-size: 1.5rem; /* Restored size */
         margin-bottom: 2rem;
     }
 
     .work-showcase {
         flex-direction: column;
-        gap: 2rem; /* Reduced gap */
+        gap: 2rem; /* Restored gap */
         width: 100%;
         align-items: center;
     }
 
     .work-item img {
-        height: 5rem; /* Reduced from 8rem or 10rem */
+        height: 5rem; /* Restored size */
     }
     
     .placeholder-content {
@@ -476,7 +483,7 @@ canvas {
     }
 
     .placeholder-content span {
-        font-size: 1.2rem; /* Reduced size */
+        font-size: 1.2rem; /* Restored size */
         text-align: center;
     }
 }
