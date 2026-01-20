@@ -375,7 +375,6 @@ canvas {
 .brand-logo {
     width: auto;
     max-width: 8rem;
-    filter: brightness(0) invert(1); /* Make logo white */
 }
 
 /* Hero Text */
