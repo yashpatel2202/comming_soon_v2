@@ -65,19 +65,52 @@ yellowGlow.position.set(2, 2, 2); // Positioned to hit the side/front
 scene.add(yellowGlow);
 
 // -------------------------------------------------------------------------
-// Shadow Catcher
+// Premium Royal Base (Procedural Podium) - PRE-LOADED
 // -------------------------------------------------------------------------
-// Invisible plane that only receives shadows
-const planeGeom = new THREE.PlaneGeometry(100, 100);
-const planeMat = new THREE.ShadowMaterial({
-    opacity: 0.5, // Stronger shadows needed on dark ground
-    color: 0x000000
-});
-const shadowPlane = new THREE.Mesh(planeGeom, planeMat);
-shadowPlane.rotation.x = -Math.PI / 2;
-shadowPlane.position.y = -1; // Default low, will be adjusted by model
-shadowPlane.receiveShadow = true;
-scene.add(shadowPlane);
+// Using estimated dimensions to match the sculpture so it appears INSTANTLY
+const podiumY = -0.6; // Raised back up to be visible
+const baseRadius = 0.45; // Keeping the tighter radius 
+const baseHeight = 0.15;
+
+// 1. Polished Black Marble Cylinder
+const geometryBase = new THREE.CylinderGeometry( baseRadius, baseRadius * 1.05, baseHeight, 64 ); 
+const materialBase = new THREE.MeshStandardMaterial( { 
+    color: 0x050505, 
+    roughness: 0.1, 
+    metalness: 0.9,
+    envMapIntensity: 1.0
+} );
+const cylinderBase = new THREE.Mesh( geometryBase, materialBase );
+cylinderBase.position.y = podiumY - (baseHeight / 2);
+cylinderBase.receiveShadow = true;
+scene.add( cylinderBase );
+
+// 2. Gold Accent Ring
+const geometryRing = new THREE.TorusGeometry( baseRadius * 1.02, 0.01, 16, 100 ); 
+const materialRing = new THREE.MeshStandardMaterial( { 
+    color: 0xffd700, 
+    roughness: 0.1, 
+    metalness: 1.0,
+    emissive: 0x332200
+} ); 
+const torusRing = new THREE.Mesh( geometryRing, materialRing );
+torusRing.rotation.x = Math.PI / 2;
+torusRing.position.y = podiumY - (baseHeight * 0.2); 
+scene.add( torusRing );
+
+// 3. Subtle Floor Glow Ring
+const glowRingGeo = new THREE.RingGeometry(baseRadius * 1.4, baseRadius * 1.42, 64);
+const glowRingMat = new THREE.MeshBasicMaterial( { 
+    color: 0xffd700, 
+    transparent: true, 
+    opacity: 0.15, 
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending 
+} );
+const glowRing = new THREE.Mesh(glowRingGeo, glowRingMat);
+glowRing.rotation.x = -Math.PI / 2;
+glowRing.position.y = podiumY - baseHeight + 0.01;
+scene.add(glowRing);
 
 // Load 3D Model
 const loader = new GLTFLoader();
@@ -89,8 +122,6 @@ loader.setDRACOLoader( dracoLoader );
 
 let mixer;
 let loadedModel; // Variable to store model for rotation
-
-
 
 loader.load(
     'public/sculpture_v2.glb',
@@ -110,9 +141,6 @@ loader.load(
         
         // Initial Rotation (90 degrees)
         model.rotation.y = - (Math.PI / 1); // 90 degrees
-        
-        // Snap shadow plane to bottom of model (accounting for offset)
-        shadowPlane.position.y = (-boxSize.y / 2) - verticalOffset;
 
         model.traverse((node) => {
             if (node.isMesh) {
@@ -131,53 +159,6 @@ loader.load(
         });
 
         scene.add(model);
-
-        // ---------------------------------------------------------
-        // Premium Royal Base (Procedural Podium)
-        // ---------------------------------------------------------
-        const baseRadius = Math.max(boxSize.x, boxSize.z) * 0.55; 
-        const baseHeight = 0.15;
-        const podiumY = (-boxSize.y / 2) - verticalOffset;
-
-        // 1. Polished Black Marble Cylinder
-        const geometryBase = new THREE.CylinderGeometry( baseRadius, baseRadius * 1.05, baseHeight, 64 ); 
-        const materialBase = new THREE.MeshStandardMaterial( { 
-            color: 0x050505, 
-            roughness: 0.1, 
-            metalness: 0.9,
-            envMapIntensity: 1.0
-        } );
-        const cylinderBase = new THREE.Mesh( geometryBase, materialBase );
-        cylinderBase.position.y = podiumY - (baseHeight / 2);
-        cylinderBase.receiveShadow = true;
-        scene.add( cylinderBase );
-
-        // 2. Gold Accent Ring
-        const geometryRing = new THREE.TorusGeometry( baseRadius * 1.02, 0.01, 16, 100 ); 
-        const materialRing = new THREE.MeshStandardMaterial( { 
-            color: 0xffd700, 
-            roughness: 0.1, 
-            metalness: 1.0,
-            emissive: 0x332200
-        } ); 
-        const torusRing = new THREE.Mesh( geometryRing, materialRing );
-        torusRing.rotation.x = Math.PI / 2;
-        torusRing.position.y = podiumY - (baseHeight * 0.2); // Embedded slightly
-        scene.add( torusRing );
-
-        // 3. Subtle Floor Glow Ring
-        const glowRingGeo = new THREE.RingGeometry(baseRadius * 1.4, baseRadius * 1.42, 64);
-        const glowRingMat = new THREE.MeshBasicMaterial( { 
-            color: 0xffd700, 
-            transparent: true, 
-            opacity: 0.15, 
-            side: THREE.DoubleSide,
-            blending: THREE.AdditiveBlending 
-        } );
-        const glowRing = new THREE.Mesh(glowRingGeo, glowRingMat);
-        glowRing.rotation.x = -Math.PI / 2;
-        glowRing.position.y = podiumY - baseHeight + 0.01;
-        scene.add(glowRing);
 
         // Fade in Canvas
         setTimeout(() => {
@@ -213,12 +194,7 @@ loader.load(
     }
 );
 
-// Mouse/Touch Interaction with Smooth Inertia
-let targetRotationY = 0;
-let targetRotationX = 0; // Optional if we want vertical tilt
-let mouseX = 0;
 let mouseXOnMouseDown = 0;
-let targetRotationYOnMouseDown = 0;
 
 let windowHalfX = window.innerWidth / 2;
 
@@ -324,7 +300,7 @@ function animate() {
             
             // Add a very subtle constant auto-rotation if momentum has stopped
             if (Math.abs(rotationVelocity) < 0.0001) {
-                loadedModel.rotation.y += 0.0005; // Gentle Drift
+                loadedModel.rotation.y += 0.0015; // Gentle Drift
             }
         }
     }
