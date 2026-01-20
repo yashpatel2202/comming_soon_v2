@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yash - Resume</title>
+    <meta
+      name="description"
+      content="Professional Resume of Yash - Flutter Developer & Graphics Designer"
+    />
+    <link rel="icon" type="image/png" href="/public/yash.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        /* Resume Specific Styles */
+        body {
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            font-family: var(--font-body);
+            color: #d1d1d1;
+        }
+
+        .resume-container {
+            max-width: 800px; /* Reduced width for better reading line length */
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .resume-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .resume-header h1 {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 2rem; /* Further Reduced */
+            background: linear-gradient(90deg, var(--gold-primary) 0%, var(--gold-light) 50%, var(--gold-secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .resume-role {
+            font-size: 0.9rem; /* Further Reduced */
+            color: var(--text-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .resume-summary {
+            font-size: 0.85rem; /* Further Reduced */
+            line-height: 1.5;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto 1.5rem auto;
+            text-align: center;
+        }
+
+        .resume-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-gold {
+            font-family: var(--font-body);
+            font-size: 0.75rem; /* Compact buttons */
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+            padding: 0.5rem 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            background: rgba(212, 175, 55, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border-radius: 2px;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-primary);
+            color: #000;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Timeline Layout */
+        .timeline-section {
+            position: relative;
+            padding-left: 2rem; /* 32px space */
+            margin-bottom: 2rem;
+        }
+
+        /* Vertical Line */
+        .timeline-section::before {
+            content: '';
+            position: absolute;
+            left: 7px; /* Line center at 7.5px */
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-white);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            background: #0a0a0a;
+            padding: 5px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            z-index: 2;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .timeline-item::after { /* Timeline Dot */
+            content: '';
+            position: absolute;
+            left: -25px; /* 32px (padding) - 25px = 7px (matches line left) */
+            top: 0.4rem; /* Aligns with text nicely */
+            width: 8px; /* Center at 7px + 4px = 11px? No. */
+            /* Line is 1px at left 7px. Center 7.5px.
+               Dot is 8px. To center at 7.5px, left should be 7.5 - 4 = 3.5px.
+               3.5px relative to 32px padding is 3.5 - 32 = -28.5px.
+               Let's try -28.5px.
+            */
+            left: -28.5px;
+            height: 8px;
+            border-radius: 50%;
+            background: #0a0a0a;
+            border: 1px solid var(--gold-secondary);
+            z-index: 1;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-title {
+            font-size: 0.95rem;
+            color: var(--gold-light);
+            font-weight: 600;
+        }
+
+        .timeline-period {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .timeline-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-white);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .timeline-content {
+            font-size: 0.8rem; /* Target small size */
+            line-height: 1.5;
+            color: #aaa;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .timeline-content li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-content li::before {
+            content: '-';
+            position: absolute;
+            left: 0;
+            color: var(--gold-secondary);
+        }
+
+        /* Skills Grid - Compact */
+        .skills-compact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-left: -2rem; /* No timeline line needed here essentially, or outside it */
+            padding-left: 2rem;
+        }
+
+        .skill-pill {
+            font-size: 0.75rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            padding: 0.2rem 0.6rem;
+            border-radius: 100px;
+            color: #ddd;
+        }
+        
+        .highlights-row {
+            display: flex;
+            gap: 1rem;
+            margin-left: -2rem;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-mini {
+            flex: 1;
+            background: rgba(255,255,255,0.02);
+            padding: 0.8rem;
+            border-radius: 4px;
+            border-top: 2px solid var(--gold-secondary);
+        }
+
+        .highlight-mini h4 {
+            font-size: 0.8rem;
+            color: var(--gold-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .highlight-mini p {
+            font-size: 0.75rem;
+            color: #999;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            .highlights-row { flex-direction: column; gap: 0.5rem; }
+            .timeline-section { padding-left: 1.5rem; }
+            .section-title { margin-left: -1.5rem; }
+            .timeline-item::after { left: -1.55rem; }
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-left: -2rem;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.06);
+            border-color: var(--gold-primary);
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            object-fit: cover;
+            background: #000;
+        }
+
+        .project-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-white);
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+        }
+
+        .project-link {
+            color: #888;
+            font-size: 1rem;
+            transition: all 0.2s;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none; /* Removed underline */
+        }
+
+        .project-link:hover {
+            color: var(--text-white);
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+            color: #000;
+            transform: translateY(-2px);
+        }
+        
+        .fa-apple { font-size: 1.2rem; margin-bottom: 2px; }
+        .fa-google-play { font-size: 0.9rem; }
+
+        /* Achievements */
+        .achievement-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            margin-left: -1rem; /* Slight alignment adjust if needed, mostly 0 is fine but to match grid maybe? */
+            margin-left: 0; 
+        }
+
+        .achievement-card:hover {
+            border-color: var(--gold-primary);
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        .achievement-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .achievement-info {
+            flex: 1;
+        }
+
+        .achievement-title {
+            font-family: var(--font-body);
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 0.2rem;
+            font-size: 1rem;
+        }
+
+        .achievement-subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .achievement-link {
+            color: var(--gold-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .achievement-link:hover {
+            color: var(--gold-primary);
+            text-decoration: underline;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+    <div class="grain-overlay"></div>
+    
+    <!-- Background Orbs -->
+    <div class="glow-orb orb-1" style="top:5%; left:50%; width: 300px; height: 300px; opacity: 0.2;"></div>
+    <div class="glow-orb orb-2" style="top:70%; right:10%; width: 250px; height: 250px; opacity: 0.15;"></div>
+
+    <div class="resume-container">
+        
+        <header class="resume-header">
+            <h1>YASH PATEL</h1>
+            <div class="resume-role">Flutter Developer & Graphics Designer</div>
+            <p class="resume-summary">
+                Flutter Developer with 4+ years of experience. Bridging complex backends with premium UI/UX using Clean Architecture and rigorous performance tuning.
+            </p>
+            <div class="resume-actions">
+                <a href="/" class="btn-gold"><i class="fas fa-arrow-left"></i> Home</a>
+                <a href="#" class="btn-gold"><i class="fas fa-download"></i> PDF</a>
+            </div>
+        </header>
+
+        <!-- Main Timeline Container -->
+        
+        <!-- Highlights -->
+        <h3 class="section-title"><i class="fas fa-star"></i> Focus Areas</h3>
+        <div class="highlights-row">
+            <div class="highlight-mini">
+                <h4>Architecture</h4>
+                <p>Clean & Modular Systems</p>
+            </div>
+            <div class="highlight-mini">
+                <h4>Performance</h4>
+                <p>Rendering & Memory Optimization</p>
+            </div>
+            <div class="highlight-mini">
+                <h4>Production</h4>
+                <p>CI/CD & Automated Testing</p>
+            </div>
+            <div class="highlight-mini">
+                <h4>Design</h4>
+                <p>Pixel-Perfect Implementation</p>
+            </div>
+        </div>
+
+        <!-- Experience Timeline -->
+        <h3 class="section-title"><i class="fas fa-briefcase"></i> Experience</h3>
+        <div class="timeline-section">
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span class="timeline-title">ProjectTree</span>
+                    <span class="timeline-period">2021 – Present</span>
+                </div>
+                <div class="timeline-subtitle">Flutter Developer</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>Engineered scalable production apps serving thousands of users.</li>
+                        <li>Reduced tech debt via modular clean architecture & reusable libraries.</li>
+                        <li>Optimized rendering & memory usage for better performance.</li>
+                        <li>Deployed CI/CD pipelines, cutting release time.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span class="timeline-title">BAPS Organization</span>
+                    <span class="timeline-period">2016 – 2021</span>
+                </div>
+                <div class="timeline-subtitle">Volunteer Lead</div>
+                <div class="timeline-content">
+                    <ul>
+                        <li>AV Team Lead and fulfilled many organizational level events.</li>
+                        <li>Led diverse teams in high-pressure operational environments.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Education Timeline (Connected) -->
+        <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h3>
+        <div class="timeline-section">
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span class="timeline-title">B.E. Computer Engineering</span>
+                    <span class="timeline-period">2016</span>
+                </div>
+                <div class="timeline-subtitle">Birla Vishwakarma Mahavidyalaya (GTU)</div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span class="timeline-title">Higher Secondary (12th)</span>
+                    <span class="timeline-period">2012</span>
+                </div>
+                <div class="timeline-subtitle">GSEB Board <span style="color:var(--gold-secondary); margin-left:5px;">• 86%</span></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-header">
+                    <span class="timeline-title">Secondary (10th)</span>
+                    <span class="timeline-period">2010</span>
+                </div>
+                <div class="timeline-subtitle">GSEB Board <span style="color:var(--gold-secondary); margin-left:5px;">• 89%</span></div>
+            </div>
+        </div>
+
+        <!-- Skills (Bottom) -->
+         <h3 class="section-title"><i class="fas fa-code"></i> Tech Stack</h3>
+         <div class="skills-compact">
+            <span class="skill-pill">Flutter</span>
+            <span class="skill-pill">Dart</span>
+            <span class="skill-pill">BLoC</span>
+            <span class="skill-pill">Provider</span>
+            <span class="skill-pill">Clean Architecture</span>
+            <span class="skill-pill">Firebase</span>
+            <span class="skill-pill">REST APIs</span>
+            <span class="skill-pill">GraphQL</span>
+            <span class="skill-pill">Git</span>
+            <span class="skill-pill">CI/CD</span>
+            <span class="skill-pill">Figma</span>
+         </div>
+
+        <!-- Projects -->
+        <h3 class="section-title" style="margin-top: 3rem;"><i class="fas fa-cubes"></i> Projects</h3>
+        <div class="projects-grid">
+            <!-- MySeva -->
+            <div class="project-card">
+                <img src="/public/myseva.png" class="project-icon" alt="MySeva">
+                <span class="project-name">MySeva</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/myseva/id1496725227" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=org.baps.na.myseva" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- MySatsang -->
+            <div class="project-card">
+                <img src="/public/mysatsang.png" class="project-icon" alt="MySatsang">
+                <span class="project-name">MySatsang</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/mysatsang/id6444313821" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=org.baps.mysatsang&hl=en" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- MyMandir -->
+            <div class="project-card">
+                <img src="/public/mymandir.png" class="project-icon" alt="MyMandir">
+                <span class="project-name">MyMandir</span>
+            </div>
+            <!-- BKMS -->
+            <div class="project-card">
+                <img src="/public/bkms.png" class="project-icon" alt="BKMS">
+                <span class="project-name">BKMS</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/bkms/id1631095520" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=org.baps.na.bkmsapp" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- DrPro -->
+            <div class="project-card">
+                <img src="/public/drpro.png" class="project-icon" alt="DrPro">
+                <span class="project-name">DrPro</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/drpro-app/id6605942044" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=drpro.patient.app" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- DrPro Clinic -->
+            <div class="project-card">
+                <img src="/public/drpro-clinic.png" class="project-icon" alt="DrPro Clinic">
+                <span class="project-name">DrPro Clinic</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/drpro-clinic/id6469030857" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=drpro.dr.app" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- DrPro Lab -->
+            <div class="project-card">
+                <img src="/public/drpro-lab.png" class="project-icon" alt="DrPro Lab">
+                <span class="project-name">DrPro Lab</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/drpro-lab/id6608414270" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=drpro.lab.app" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- LoomMate -->
+            <div class="project-card">
+                <img src="/public/loommate.png" class="project-icon" alt="LoomMate">
+                <span class="project-name">LoomMate</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/loommate/id6449731535" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                </div>
+            </div>
+            <!-- InviteHub -->
+            <div class="project-card">
+                <img src="/public/invitehub.png" class="project-icon" alt="InviteHub">
+                <span class="project-name">InviteHub</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/invitehub/id6737127036" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                    <a href="https://play.google.com/store/apps/details?id=invitehub.app&hl=en" target="_blank" class="project-link"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+            <!-- Kiosk Jewelry -->
+            <div class="project-card">
+                <img src="/public/kiosk.png" class="project-icon" alt="Kiosk Jewelry">
+                <span class="project-name">Kiosk Jewelry</span>
+                <div class="project-links">
+                    <a href="https://apps.apple.com/us/app/kiosk-jewelry/id6447692852" target="_blank" class="project-link"><i class="fab fa-apple"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Libraries & Tools -->
+        <h3 class="section-title"><i class="fas fa-code-branch"></i> Authored Libraries & Tools</h3>
+        <div class="achievement-card">
+            <img src="/public/kflavor.png" class="achievement-icon" alt="kflavor">
+            <div class="achievement-info">
+                <div class="achievement-title">kflavor</div>
+                <div class="achievement-subtitle">Flutter library to manage application flavors (environments). <span style="color:var(--gold-primary); font-weight:600;"><i class="fas fa-box"></i> Hosted on pub.dev</span></div>
+                <a href="https://pub.dev/packages/kflavor" target="_blank" class="achievement-link">View Package <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i></a>
+            </div>
+        </div>
+        <div class="achievement-card" style="margin-top: -1rem;">
+            <img src="/public/components.png" class="achievement-icon" alt="Components">
+            <div class="achievement-info">
+                <div class="achievement-title">Flutter Component Library</div>
+                <div class="achievement-subtitle">Comprehensive, configurable UI system for cross-application usage.</div>
+                <a href="https://components.iamyash.in/" target="_blank" class="achievement-link">View Documentation <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i></a>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <h3 class="section-title"><i class="fas fa-trophy"></i> Achievements</h3>
+        <div class="achievement-card">
+            <img src="/public/regenx.png" class="achievement-icon" alt="RegenX">
+            <div class="achievement-info">
+                <div class="achievement-title">Top 10 Finalist – Autonomous Hackathon 2026</div>
+                <div class="achievement-subtitle">Powered by Google Developer Group</div>
+                <a href="https://regenx.iamyash.in/" target="_blank" class="achievement-link">Project: RegenX <i class="fas fa-external-link-alt" style="font-size: 0.8em;"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/cursor.js"></script>
+  </body>
+</html>

@@ -725,3 +725,34 @@ canvas {
         flex: auto;
     }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Buttons */
+/* -------------------------------------------------------------------------- */
+.btn-gold {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--gold-primary);
+    border: 1px solid var(--gold-primary);
+    padding: 0.8rem 2rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.05);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: fit-content;
+}
+
+.btn-gold:hover {
+    background: var(--gold-primary);
+    color: #000;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
