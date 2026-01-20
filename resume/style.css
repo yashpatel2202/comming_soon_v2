@@ -41,6 +41,29 @@ body {
     margin-bottom: 1rem;
 }
 
+.resume-contact {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+
+.resume-contact a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+}
+
+.resume-contact a:hover {
+    color: var(--gold-primary);
+}
+
 .resume-summary {
     font-size: 0.85rem; /* Further Reduced */
     line-height: 1.5;
@@ -414,4 +437,129 @@ body {
     font-weight: 400;
     letter-spacing: 0.05em;
     display: inline-block;
+}
+
+.section-group {
+    page-break-inside: avoid;
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 0; /* Hide browser headers/footers */
+    }
+
+    body {
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #fff !important;
+        color: #000 !important;
+        overflow: visible !important;
+        height: auto !important;
+    }
+    
+    /* Table Wrapper for Print Margins */
+    .print-layout { display: table !important; width: 100% !important; border-collapse: collapse; }
+    .print-layout thead, .print-layout tfoot { display: table-header-group !important; }
+    .print-layout tbody { display: table-row-group !important; }
+    .print-layout tr { display: table-row !important; }
+    .print-layout td { display: table-cell !important; padding: 0 1.5cm !important; /* Side Margins */ }
+    
+    .print-spacer { height: 1.5cm !important; border: none !important; }
+    tfoot .print-spacer { height: 2.5cm !important; }
+
+    .resume-container { 
+        padding: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    /* Hide UI elements */
+    .resume-actions, 
+    .grain-overlay, 
+    #cursor-dot, 
+    #cursor-outline, 
+    .glow-orb {
+        display: none !important;
+    }
+
+    /* Adjust typography */
+    h1, h2, h3, h4, .resume-role, .section-title, .timeline-title {
+        color: #000 !important;
+        -webkit-text-fill-color: initial !important; 
+        background: none !important;
+        text-shadow: none !important;
+    }
+
+    .resume-summary { color: #333 !important; }
+    .timeline-subtitle { color: #444 !important; }
+    .timeline-content { color: #222 !important; }
+    .project-name { color: #000 !important; }
+    .timeline-period { color: #666 !important; }
+    
+    /* Adjust Timeline */
+    .timeline-section::before {
+        background: #ccc !important;
+    }
+    .timeline-item::after {
+        background: #fff !important;
+        border-color: #000 !important;
+        width: 6px !important;
+        height: 6px !important;
+        left: -27.5px !important; /* Adjust if needed */
+    }
+    
+    /* Layouts */
+    .projects-grid {
+        gap: 0.5rem !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+    .project-card, .achievement-card {
+        border: 1px solid #ddd !important;
+        background: none !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+    }
+    .skill-pill {
+        color: #000 !important;
+        border-color: #ccc !important;
+        background: none !important;
+    }
+    
+    /* Links */
+    a {
+        text-decoration: none !important;
+        color: #000 !important;
+    }
+    .fa-external-link-alt {
+        display: none !important; 
+    }
+    
+    .project-link {
+        display: inline-flex !important;
+        border: 1px solid #444 !important;
+        color: #000 !important;
+        border-radius: 50% !important;
+    }
+
+    /* Page Breaks */
+    h3, .timeline-item, .achievement-card, .section-title {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+}
+
+/* Screen styles: Make table transparent */
+.print-layout, .print-layout tbody, .print-layout tr, .print-layout td {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.print-layout thead, .print-layout tfoot {
+    display: none;
 }
