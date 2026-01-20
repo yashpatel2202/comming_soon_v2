@@ -34,8 +34,79 @@ body {
     height: 100vh;
     width: 100%;
     overflow: hidden;
-    background-color: var(--bg-dark);
+    background-color: #030303; /* Deepest Black */
     color: var(--text-white);
+    cursor: none;
+    position: relative;
+}
+
+/* Vector Grid Background REMOVED */
+/* .bg-grid { display: none; } */
+
+/* Interactive Glow Orbs */
+.glow-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px); /* Increased blur for softer nebula look */
+    z-index: -1;
+    opacity: 0.6;
+    transition: transform 0.1s linear;
+    pointer-events: none;
+    mix-blend-mode: screen; /* Authentic light addition */
+}
+
+.glow-orb.orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--gold-primary) 0%, transparent 70%);
+    top: -150px; left: -150px;
+    opacity: 0.2;
+}
+
+.glow-orb.orb-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--gold-secondary) 0%, transparent 70%);
+    bottom: -100px; right: -100px;
+    opacity: 0.15;
+}
+
+.glow-orb.orb-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, #ffffff 0%, var(--gold-primary) 40%, transparent 80%);
+    top: 40%; left: 40%;
+    opacity: 0.08;
+}
+
+
+
+/* Custom Cursor Elements */
+#cursor-dot,
+#cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    mix-blend-mode: difference; /* Ensures visibility on light/dark */
+}
+
+#cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--gold-primary);
+}
+
+#cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold-primary);
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+body:hover #cursor-outline {
+    width: 40px;
+    height: 40px;
 }
 
 .grain-overlay {
@@ -54,24 +125,23 @@ body {
     display: flex;
     height: 100vh;
     width: 100%;
-    background: radial-gradient(circle at center, #111111 0%, #000000 100%);
+    background: transparent;
+    z-index: 10; /* Above background */
 }
 
 /* -------------------------------------------------------------------------- */
 /* Left Section (Sculpture & Dramatics) */
 /* -------------------------------------------------------------------------- */
 .left-section {
-    width: 45%; /* Slightly wider for better presentation */
+    width: 45%; 
     position: relative;
-    /* Create a spotlight effect for the sculpture */
-    /* Create a spotlight effect for the sculpture with a subtle golden glow */
-    background: radial-gradient(circle at 50% 50%, rgba(60, 50, 20, 0.4) 0%, #000000 70%);
+    background: transparent; /* No spotlight/gradient */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid var(--border-subtle);
+    border-right: 1px solid rgba(255, 255, 255, 0.05); /* Lighter border */
 }
 
 /* Mandala Pattern - darkened and blended */
@@ -199,14 +269,10 @@ canvas {
 /* -------------------------------------------------------------------------- */
 .right-section {
     width: 55%;
-    background-color: var(--bg-dark);
+    background-color: transparent; /* Let global bg show */
     display: flex;
     flex-direction: column;
     position: relative;
-    /* subtle pattern overlay */
-    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 40px 40px;
 }
 
 .content-wrapper {
@@ -373,18 +439,21 @@ canvas {
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--border-subtle);
     border-radius: 4px;
-    transition: all var(--transition-speed);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     text-decoration: none;
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px; /* Fixed height for consistency */
+    height: 100px;
+    overflow: hidden; /* Important for zoom effect */
 }
 
+/* Modern Hover Effect: Glow + Zoom */
 .work-item:hover {
     border-color: var(--gold-primary);
-    background: rgba(212, 175, 55, 0.05);
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); /* Soft Gold Glow */
     transform: translateY(-5px);
 }
 
@@ -392,14 +461,32 @@ canvas {
     height: 60%;
     width: auto;
     object-fit: contain;
-    filter: grayscale(100%) brightness(1.5); /* Neutralize logos */
+    filter: grayscale(100%) brightness(1.5);
     opacity: 0.7;
-    transition: all var(--transition-speed);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .work-item:hover img {
     filter: none;
     opacity: 1;
+    transform: scale(1.2); /* Cinematic Zoom */
+}
+
+/* Shine Effect on Hover */
+.work-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-25deg);
+    transition: 0.5s;
+}
+
+.work-item:hover::after {
+    left: 150%;
+    transition: 0.7s ease-in-out;
 }
 
 .placeholder-content {

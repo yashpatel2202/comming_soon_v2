@@ -59,6 +59,11 @@ const sun3 = new THREE.DirectionalLight(0x4040ff, 0.8); // Increased from 0.3
 sun3.position.set(0, 5, -5); // Backlight
 scene.add(sun3);
 
+// 5. Yellow Glow Light (Warm & Premium)
+const yellowGlow = new THREE.PointLight(0xd4af37, 5.0, 10);
+yellowGlow.position.set(2, 2, 2); // Positioned to hit the side/front
+scene.add(yellowGlow);
+
 // -------------------------------------------------------------------------
 // Shadow Catcher
 // -------------------------------------------------------------------------
