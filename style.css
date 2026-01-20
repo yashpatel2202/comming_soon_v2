@@ -41,6 +41,18 @@ body {
 }
 
 /* Grain Overlay */
+::selection {
+    background: rgba(212, 175, 55, 0.3); /* Soft transparent gold */
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5); /* Subtle glow for readability */
+}
+
+::-moz-selection {
+    background: rgba(212, 175, 55, 0.3);
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
 .grain-overlay {
     position: fixed;
     top: 0;
