@@ -25,33 +25,29 @@ container.appendChild(renderer.domElement);
 // Lighting Setup (Matching Blender "Sun" Settings)
 // -------------------------------------------------------------------------
 
-// 1. Ambient Light (Base level)
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+// 1. Ambient Light (Base level) - Darker for drama
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // Reduced from 0.2
 scene.add(ambientLight);
 
-// 2. Sun 1 (Key Light)
-// Subtle warm white + Reduced strength (was 2.0)
-const sun1 = new THREE.DirectionalLight(0xfffcf5, 1.7); 
-sun1.position.set(-3, 5, 5); // Moved from Right (3) to Left (-3)
+// 2. Sun 1 (Key Light) - Sharp, Cool highlight
+const sun1 = new THREE.DirectionalLight(0xffffff, 2.5); 
+sun1.position.set(-3, 5, 5); 
 sun1.castShadow = true;
-sun1.shadow.mapSize.width = 2048; // High res for sharp shadows
+sun1.shadow.mapSize.width = 2048; 
 sun1.shadow.mapSize.height = 2048;
 sun1.shadow.bias = -0.0001;
-sun1.shadow.radius = 6; // Softer shadows (increased from 4)
+sun1.shadow.radius = 4; 
 scene.add(sun1);
 
-// 3. Sun 2 (Fill/Warm Light) 
-// Less saturated warm + Reduced strength (was 1.5)
-const sun2 = new THREE.DirectionalLight(0xffefe0, 1.2);
-sun2.position.set(5, 5, 2); // Moved from Left (-5) to Right (5)
-sun2.castShadow = true; // Image showed shadow checked
+// 3. Sun 2 (Fill/Warm Light) - Gold tint for the "Royal" feel
+const sun2 = new THREE.DirectionalLight(0xffd700, 1.5); // Gold
+sun2.position.set(5, 2, 2); 
+sun2.castShadow = true; 
 scene.add(sun2);
 
-// 4. Sun 3 (Front Light)
-// Similar to key light but frontal
-const sun3 = new THREE.DirectionalLight(0xfffcf5, 1.5);
-sun3.position.set(0, 5, 5); // Directly in front
-sun3.castShadow = true;
+// 4. Sun 3 (Rim Light) - Blue/Cool for separation
+const sun3 = new THREE.DirectionalLight(0x4040ff, 1.8);
+sun3.position.set(0, 5, -5); // Backlight
 scene.add(sun3);
 
 // -------------------------------------------------------------------------
@@ -60,7 +56,7 @@ scene.add(sun3);
 // Invisible plane that only receives shadows
 const planeGeom = new THREE.PlaneGeometry(100, 100);
 const planeMat = new THREE.ShadowMaterial({
-    opacity: 0.3,
+    opacity: 0.5, // Stronger shadows needed on dark ground
     color: 0x000000
 });
 const shadowPlane = new THREE.Mesh(planeGeom, planeMat);

@@ -1,494 +1,412 @@
 :root {
-    --primary-orange: #FF8C00;
-    --text-dark: #1a1a1a;
-    --text-gray: #6e6e73;
-    --text-light-gray: #86868b;
-    --bg-white: #ffffff;
-    --transition-speed: 0.3s;
+    /* Palette: Premium Royal Dark */
+    --gold-primary: #D4AF37; /* Royal Gold */
+    --gold-secondary: #AA8C2C; /* Darker Gold for depth */
+    --gold-light: #F8E287; /* Highlight Gold */
+    
+    --bg-dark: #0e0e0e; /* Slightly greyer black */
+    --bg-panel: #0a0a0a; /* Slightly lighter for contrast */
+    --bg-glass: rgba(20, 20, 20, 0.6); /* Glassmorphism base */
+    
+    --text-white: #ededed;
+    --text-muted: #888888;
+    --text-gold-muted: #bfa35f;
+
+    --border-gold: rgba(212, 175, 55, 0.3);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+
+    --transition-speed: 0.4s;
+    --font-heading: 'Cinzel', serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     height: 100vh;
     width: 100%;
-    overflow: hidden; /* Prevent scrolling for the split screen effect */
-    background-color: var(--bg-white);
+    overflow: hidden;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
 }
 
 .split-container {
     display: flex;
     height: 100vh;
     width: 100%;
+    background: radial-gradient(circle at center, #111111 0%, #000000 100%);
 }
 
-/* Left Section Styles */
+/* -------------------------------------------------------------------------- */
+/* Left Section (Sculpture & Dramatics) */
+/* -------------------------------------------------------------------------- */
 .left-section {
-    width: 40%;
+    width: 45%; /* Slightly wider for better presentation */
     position: relative;
-    background: linear-gradient(to bottom, #f9f9f9 75%, var(--primary-orange) 75%);
+    /* Create a spotlight effect for the sculpture */
+    background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 80%);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-right: 1px solid var(--border-subtle);
 }
 
-/* Mandala Style Removed (Moved down for better visibility control) */
-/* Make Mandala Visible */
+/* Mandala Pattern - darkened and blended */
 .decorative-mandala {
     position: absolute;
-    top: 0%; /* Vertically centered relative to where sculpture sits */
-    bottom: 0%;
-    right: -1%; /* Bleed off right edge of left-section */
-    width: 40%; /* Sized to be behind sculpture */
-    z-index: 0; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; /* Larger */
+    opacity: 0.15; /* Increased visibility */
+    z-index: 0;
     pointer-events: none;
-    mix-blend-mode: multiply; 
+    mix-blend-mode: screen; /* Changed to screen for better visibility on dark */
+    filter: invert(1); /* Invert if original was dark, or keep subtle */
 }
 
-.decorative-mandala img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Text Overlays on Left */
+/* Text Overlays - Editorial Style */
 .text-overlays {
     position: absolute;
-    top: 50px;
-    left: 40px;
+    top: 60px;
+    left: 60px;
     z-index: 2;
+    mix-blend-mode: normal; /* Removed exclusion to keep gold colors vibrant */
 }
 
 .title-container {
     display: flex;
     align-items: flex-start;
-    gap: 10px; /* Gap between the columns */
+    gap: -0.5rem;
 }
 
-/* First Column: YOU ARE (Stacked Vertically, Rotated) */
-.col-you-are {
+/* Columns for typographic lockup */
+.col-you-are, .col-the, .col-stack {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Align to bottom of the block if needed, or start */
-    align-items: center;
-    gap: 15px; /* Space between YOU and ARE */
+}
+
+.col-you-are {
+    gap: 0rem;
+    justify-content: flex-end;
 }
 
 .rotated-text {
     writing-mode: vertical-rl;
-    transform: rotate(180deg); /* Text reads bottom to top */
-    font-weight: 700;
-    line-height: 1;
-    white-space: nowrap;
-}
-
-.rotated-text.orange {
-    color: var(--primary-orange);
-    font-size: 3.5rem;
-    letter-spacing: 2px;
-}
-
-/* Second Column: THE (Rotated) */
-.col-the {
-    display: flex;
-    align-items: flex-start; /* Align to top */
-    padding-top: 5px; 
-    height: 100%;
+    transform: rotate(180deg);
+    font-family: var(--font-heading); /* Match Stone style */
+    font-weight: 700; /* Bold to match SCULPTURE */
+    font-size: 3rem; /* Increased size significantly */
+    letter-spacing: 0.15em; /* Adjusted spacing */
+    
+    /* Gold Gradient like SCULPTURE */
+    background: linear-gradient(90deg, var(--gold-primary) 0%, var(--gold-light) 50%, var(--gold-secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    text-shadow: none; /* Remove shadow for cleaner gradient */
 }
 
 .rotated-text.dark-bold {
-    font-size: 3.5rem; /* Matching STONE size */
-    font-weight: 700;
-    color: #1a1a1a;
-    letter-spacing: 1px;
-    margin-top: 0; 
+    /* Match STONE style */
+    font-family: var(--font-heading);
+    font-size: 3rem; /* Reduced slightly to match height better if needed */
+    font-weight: 400;
+    font-style: normal;
+    
+    /* White Gradient like STONE */
+    background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: 0.05em;
 }
 
-/* Third Column: Horizontal Stack */
 .col-stack {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     gap: 0;
-    padding-left: 5px;
 }
 
 .stack-line {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1.1;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1;
     text-transform: uppercase;
-    white-space: nowrap;
+    background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.05em;
 }
 
-.stack-line.dark {
-    color: #1a1a1a;
-}
-
-.stack-line.orange {
-    color: var(--primary-orange);
+.stack-line.orange { /* Keeping class name but changing style */
+    color: var(--gold-primary);
+    background: linear-gradient(90deg, var(--gold-primary) 0%, var(--gold-light) 50%, var(--gold-secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 /* 3D Model Container */
 .model-container {
     width: 100%;
-    height: 100%; /* Changed from 80% to full height to allow better positioning via camera */
+    height: 100%;
     z-index: 10;
-    position: absolute; /* Changed from relative to absolute to overlay properly */
+    position: absolute;
     top: 0;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: auto; /* Ensure controls work */
+    pointer-events: auto;
 }
 
-/* Ensure controls work */
 canvas {
     outline: none;
+    filter: contrast(1.1) brightness(1.1); /* Pop the metal */
 }
 
-/* Right Section Styles */
+/* -------------------------------------------------------------------------- */
+/* Right Section (Content) */
+/* -------------------------------------------------------------------------- */
 .right-section {
-    width: 60%; 
-    background-color: var(--bg-white);
+    width: 55%;
+    background-color: var(--bg-dark);
     display: flex;
     flex-direction: column;
-    padding: 0; /* padding moved to children */
     position: relative;
-    height: 100vh;
+    /* subtle pattern overlay */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 .content-wrapper {
-    max-width: 100%;
-    width: 100%;
-    flex: 1; /* Takes up remaining space above the bottom section */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    padding: 1rem 4rem 1rem 4rem; /* Padding for the main content area */
+    justify-content: center;
+    padding: 2rem 6rem;
+    gap: 2rem;
 }
 
-/* 1. Header (Top Right) */
+/* Top Bar */
 .top-bar {
-    width: auto;
+    position: absolute;
+    top: 2rem;
+    right: 4rem;
 }
 
 .status-badge {
-    font-size: 2rem; 
-    font-weight: 500;
-    color: #000000;
-    text-transform: uppercase;
-    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    color: var(--gold-primary);
+    border: 1px solid var(--border-gold);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    background: rgba(212, 175, 55, 0.05);
+    backdrop-filter: blur(5px);
 }
 
-/* 2. Logo Area */
+/* Logo */
 .brand-section {
-    margin-top: 5vh; /* Dynamic spacing */
-    margin-bottom: 3rem;
-    width: 100%;
+    margin-bottom: 2rem;
+    opacity: 0.8;
 }
 
 .brand-logo {
-    width: auto; 
-    max-width: 10rem; /* Increased size */
-    height: auto; 
-    display: block;
+    width: auto;
+    max-width: 8rem;
+    filter: brightness(0) invert(1); /* Make logo white */
 }
 
-/* 3. Main Headline & Subtext */
-.hero-section {
-    margin-bottom: 2rem; 
-    width: 100%;
-}
-
+/* Hero Text */
 .hero-section h1 {
-    font-size: 3rem; /* Larger font size */
-    font-weight: 500;
-    line-height: 1.1;
-    color: var(--primary-orange);
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
+    /* Gold Gradient Text */
+    background: linear-gradient(135deg, #fff 30%, #777 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtext {
-    font-size: 1.35rem; /* Larger font size */
-    font-weight: 400;
-    line-height: 1.6;
-    color: #999999; /* Slightly lighter base gray */
-    margin-bottom: 4rem; 
-    display: block;
-    max-width: 90%;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-muted);
+    max-width: 80%;
+    border-left: 2px solid var(--gold-secondary);
+    padding-left: 1.5rem;
 }
 
 .subtext .highlight-text {
-    color: #333333; /* Darker accent */
-    font-weight: 500; /* Bolder */
+    color: var(--text-white);
+    font-weight: 400;
 }
 
-/* 4. Contact Section */
+/* Contact */
 .contact-section {
-    width: 100%;
+    margin-top: 2rem;
     display: flex;
-    align-items: baseline; /* Strictly align on text baseline */
-    gap: 3rem; /* Reduced gap */
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .contact-section h2 {
-    font-size: 1.5rem; /* Reduced from 2rem */
-    font-weight: 500;
-    color: var(--primary-orange);
-    margin-bottom: 0; 
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.2rem;
+    color: var(--gold-secondary);
     text-transform: uppercase;
-    line-height: 1;
 }
 
 .contact-icons {
     display: flex;
-    gap: 2rem; /* Reduced gap */
-    align-items: baseline; /* Ensure icons align on baseline */
+    gap: 2rem;
 }
 
 .contact-icons a {
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    transition: all var(--transition-speed);
+    border: 1px solid transparent;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: auto;
-    height: auto;
-    color: #888888;
-    font-size: 1.5rem; /* Reduced from 2rem */
-    text-decoration: none;
-    transition: all var(--transition-speed);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.03);
 }
 
 .contact-icons a:hover {
-    color: var(--primary-orange);
-    transform: scale(1.1);
+    color: var(--gold-primary);
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* 5. Selected Work Section (Grey Background) */
+/* Selected Work (Bottom) */
 .selected-work-section {
-    width: 100%;
-    height: 25vh; /* 25% height to match the left orange section */
-    background-color: #f7f7f7; /* Light grey background */
-    padding: 0 4rem; /* Side padding matches top section */
+    height: auto;
+    min-height: 25vh;
+    background: rgba(10, 10, 10, 0.95);
+    border-top: 1px solid var(--border-subtle);
+    padding: 2rem 6rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-top: 1px solid #eaeaea; /* Subtle border */
-    margin-top: auto; /* Ensures it stays at bottom if content above is short */
+    backdrop-filter: blur(20px);
 }
 
 .selected-work-section h1 {
-    font-size: 1.5rem; /* Reduced from 2rem */
-    font-weight: 500;
-    color: var(--primary-orange);
-    margin-bottom: 1.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    letter-spacing: 0.2rem;
+    color: var(--gold-secondary);
+    margin-bottom: 2rem;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selected-work-section h1::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--border-subtle);
+    flex: 1;
 }
 
 .work-showcase {
     display: flex;
-    align-items: center; /* Center Vertically */
-    gap: 4rem; /* More spacing */
+    gap: 2rem;
 }
 
 .work-item {
+    position: relative;
+    padding: 1rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    transition: all var(--transition-speed);
+    text-decoration: none;
+    flex: 1;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 1rem; 
-    text-decoration: none; /* Remove underline from links */
-    cursor: pointer;
+    height: 100px; /* Fixed height for consistency */
+}
+
+.work-item:hover {
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.05);
+    transform: translateY(-5px);
 }
 
 .work-item img {
-    height: 6rem; /* Reduced from 10rem */
+    height: 60%;
     width: auto;
     object-fit: contain;
-    filter: none; 
-    display: block;
+    filter: grayscale(100%) brightness(1.5); /* Neutralize logos */
+    opacity: 0.7;
+    transition: all var(--transition-speed);
 }
 
-.work-label {
-    font-size: 1rem; /* Reduced from 1.1rem */
-    font-weight: 500;
-    color: #333333;
-    margin-top: 0.5rem; 
-    text-align: center;
+.work-item:hover img {
+    filter: none;
+    opacity: 1;
 }
 
 .placeholder-content {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Align content to bottom */
-    align-items: flex-start; /* Left Align Text */
-    gap: 0;
-    height: 6rem; /* Match logo height (6rem) */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
 }
 
 .placeholder-content span {
-    font-size: 1.3rem; /* Reduced from 1.8rem */
-    font-weight: 500;
-    line-height: 1.2;
-}
-
-.placeholder-content span:first-child {
-    color: #CCCCCC; 
+    font-family: var(--font-heading);
+    color: var(--text-muted);
+    font-size: 1rem;
 }
 
 .coming-soon {
-    color: var(--primary-orange);
+    font-family: var(--font-body) !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.1rem;
+    color: var(--gold-primary) !important;
 }
 
-/* Responsive Support */
-@media (max-width: 1024px) {
-    .text-overlays {
-        transform: scale(0.8);
-        left: 20px;
-    }
-    
-    .hero-section h1 {
-        font-size: 1.8rem;
-    }
-}
-
-@media (max-width: 768px) {
-    html, body {
-        overflow-y: auto !important; /* Force scrolling on mobile */
-        height: auto !important; /* Allow body to grow */
-    }
-
-    .split-container {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-        overflow: visible; /* Ensure content isn't clipped */
-    }
-
-    /* Left Section - Top Half on Mobile */
-    .left-section {
-        width: 100%;
-        height: 50vh; /* Takes top half */
-        background: linear-gradient(to bottom, #f9f9f9 70%, var(--primary-orange) 70%);
-    }
-
-    .text-overlays {
-        transform: scale(0.5); /* Further reduced size */
-        transform-origin: top left; 
-        left: 15px; /* Increased padding slightly */
-        top: 15px;
-    }
-
-    /* Right Section - Bottom Half on Mobile */
-    /* Right Section - Bottom Half on Mobile */
-    .right-section {
-        width: 100%;
-        height: auto;
-        padding: 40px 0 0 0; /* Remove side padding from container */
-    }
-
-    .content-wrapper {
-        padding: 0 20px; /* Add side padding to content instead */
-        align-items: center; /* Center align on mobile */
-        text-align: center;
-    }
-
-    /* Elements Adjustments */
-    .top-bar {
-        position: relative;
-        top: 0;
-        left: 0;
-        margin-bottom: 2rem;
-        width: 100%;
-        text-align: center;
-    }
-
-    .status-badge {
-        font-size: 1.2rem;
-    }
-
-    .brand-section {
-        margin-top: 0;
-        margin-bottom: 2rem;
-        display: flex;
-        justify-content: center;
-    }
-
-    .hero-section h1 {
-        font-size: 1.8rem;
-        line-height: 1.2;
-    }
-
-    .subtext {
-        font-size: 1rem;
-        margin-bottom: 3rem;
-        max-width: 100%;
-    }
-
-    /* Contact Section */
-    /* Contact Section */
-    /* Contact Section */
-    .contact-section {
-        flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 3rem; /* Restored margin */
-        align-items: center;
-    }
-
-    .contact-section h2 {
-        margin-bottom: 0;
-        font-size: 1.5rem; /* Restored size */
-    }
-
-    .contact-icons a {
-        font-size: 2rem; /* Restored size (larger than desktop for touch) */
-    }
-
-    /* Selected Work */
-    .selected-work-section {
-        height: auto;
-        padding: 40px 20px !important; /* Restored padding */
-        background-color: #f7f7f7;
-        align-items: center; 
-        text-align: center;
-    }
-
-    .selected-work-section h1 {
-        font-size: 1.5rem; /* Restored size */
-        margin-bottom: 2rem;
-    }
-
-    .work-showcase {
-        flex-direction: column;
-        gap: 2rem; /* Restored gap */
-        width: 100%;
-        align-items: center;
-    }
-
-    .work-item img {
-        height: 5rem; /* Restored size */
-    }
-    
-    .placeholder-content {
-        height: auto;
-        align-items: center;
-    }
-
-    .placeholder-content span {
-        font-size: 1.2rem; /* Restored size */
-        text-align: center;
-    }
-}
-
-/* Loader Styles */
+/* -------------------------------------------------------------------------- */
+/* Loader - Re-designed for Premium Feel */
+/* -------------------------------------------------------------------------- */
 .loader-container {
     position: absolute;
     top: 0;
@@ -499,83 +417,117 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: transparent; 
+    background-color: var(--bg-dark);
     z-index: 20;
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.8s ease-out;
 }
 
-/* 3D Cube Loader Styles */
+/* Elegant Rotating Diamond/Square instead of Cube */
 .cube-loader {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--gold-primary);
     position: relative;
-    transform-style: preserve-3d;
-    animation: rotateCube 2s infinite linear;
+    animation: rotatePremium 2s infinite cubic-bezier(0.6, 0.05, 0.4, 1);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
 }
 
-.cube-face {
+.cube-loader::after {
+    content: '';
     position: absolute;
-    width: 60px;
-    height: 60px;
-    border: 2px solid var(--primary-orange);
-    opacity: 0.8;
-    background: rgba(255, 140, 0, 0.1); /* Slight orange tint */
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid var(--gold-secondary);
+    animation: rotatePremiumReverse 2s infinite cubic-bezier(0.6, 0.05, 0.4, 1);
 }
 
-/* Face positioning */
-.cube-face.front  { transform: rotateY(0deg) translateZ(30px); }
-.cube-face.back   { transform: rotateY(180deg) translateZ(30px); }
-.cube-face.right  { transform: rotateY(90deg) translateZ(30px); }
-.cube-face.left   { transform: rotateY(-90deg) translateZ(30px); }
-.cube-face.top    { transform: rotateX(90deg) translateZ(30px); }
-.cube-face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+.cube-face { display: none; } /* Removing old cube faces */
 
-@keyframes rotateCube {
-    0% { transform: rotateX(0deg) rotateY(0deg); }
-    100% { transform: rotateX(360deg) rotateY(360deg); }
+@keyframes rotatePremium {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Loader Particles */
-.particle {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary-orange);
-    border-radius: 50%;
-    opacity: 0;
-    pointer-events: none;
+@keyframes rotatePremiumReverse {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(-180deg); }
+    100% { transform: rotate(-360deg); }
 }
 
-.p1 { animation: particleFloat1 2s infinite ease-in-out; }
-.p2 { animation: particleFloat2 2.5s infinite ease-in-out 0.5s; }
-.p3 { animation: particleFloat3 2.2s infinite ease-in-out 1s; }
-.p4 { animation: particleFloat4 2.8s infinite ease-in-out 0.2s; }
-
-@keyframes particleFloat1 {
-    0% { transform: translate(-40px, -40px) scale(0); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translate(40px, 40px) scale(1); opacity: 0; }
-}
-
-@keyframes particleFloat2 {
-    0% { transform: translate(40px, -40px) scale(0); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translate(-40px, 40px) scale(1.2); opacity: 0; }
-}
-
-@keyframes particleFloat3 {
-    0% { transform: translate(-40px, 40px) scale(0); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translate(40px, -40px) scale(0.8); opacity: 0; }
-}
-
-@keyframes particleFloat4 {
-    0% { transform: translate(40px, 40px) scale(0); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translate(-40px, -40px) scale(1); opacity: 0; }
-}
+/* Removing particles for cleaner look */
+.particle { display: none; }
 
 .loader-container.fade-out {
     opacity: 0;
     pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive */
+/* -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .left-section { width: 40%; }
+    .right-section { width: 60%; }
+    .content-wrapper { padding: 2rem 4rem; }
+    .text-overlays { transform: scale(0.8); left: 30px; }
+}
+
+@media (max-width: 768px) {
+    html, body { overflow-y: auto !important; height: auto !important; }
+    .split-container { flex-direction: column; height: auto; min-height: 100vh; }
+    
+    .left-section {
+        width: 100%;
+        height: 60vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .text-overlays {
+        top: 20px;
+        left: 20px;
+        transform: scale(0.6);
+        transform-origin: top left;
+    }
+
+    .right-section {
+        width: 100%;
+        height: auto;
+        background-image: none;
+    }
+
+    .content-wrapper {
+        padding: 3rem 2rem;
+        align-items: center;
+        text-align: center;
+    }
+
+    .top-bar {
+        position: relative;
+        top: 0; right: 0;
+        margin-bottom: 2rem;
+    }
+
+    .hero-section h1 { font-size: 2.2rem; }
+    .subtext {
+        border-left: none;
+        padding-left: 0;
+        border-top: 2px solid var(--gold-secondary);
+        padding-top: 1.5rem;
+    }
+
+    .selected-work-section {
+        padding: 3rem 2rem;
+        text-align: center;
+    }
+    
+    .work-showcase {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    
+    .work-item {
+        width: 45%;
+        flex: auto;
+    }
 }
