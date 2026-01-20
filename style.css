@@ -245,9 +245,13 @@ body:hover #cursor-outline {
     flex-direction: column;
 }
 
+.col-the {
+    padding-top: 0.20em; /* Final visual alignment fix */
+}
+
 .col-you-are {
     gap: 0rem;
-    justify-content: flex-end;
+    padding-top: 0px;
 }
 
 .rotated-text {
@@ -265,6 +269,9 @@ body:hover #cursor-outline {
     -webkit-text-fill-color: transparent;
     
     text-shadow: none; /* Remove shadow for cleaner gradient */
+    line-height: 0.8; 
+    margin-top: -0.15em;
+    padding-top: -0.15em;
 }
 
 .rotated-text.dark-bold {
@@ -340,6 +347,7 @@ canvas {
     flex-direction: column;
     position: relative;
     backdrop-filter: blur(10px); /* Subtle glass feel */
+    overflow-y: auto; /* Enable scrolling for content */
 }
 
 .content-wrapper {
@@ -669,6 +677,10 @@ canvas {
         transform-origin: top left;
     }
 
+    .rotated-text {
+        position: relative;
+    }
+
     .right-section {
         width: 100%;
         height: auto;
@@ -693,6 +705,9 @@ canvas {
         padding-left: 0;
         border-top: 2px solid var(--gold-secondary);
         padding-top: 1.5rem;
+        text-align: center;
+        width: fit-content;
+        margin: 0 auto;
     }
 
     .selected-work-section {
