@@ -54,36 +54,89 @@ body {
 }
 
 /* Interactive Glow Orbs */
+/* Interactive Glow Orbs */
 .glow-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(100px); /* Increased blur for softer nebula look */
+    filter: blur(80px); /* Slightly sharper for shape visibility */
     z-index: -1;
-    opacity: 0.6;
-    transition: transform 0.1s linear;
     pointer-events: none;
-    mix-blend-mode: screen; /* Authentic light addition */
+    mix-blend-mode: screen; 
+    will-change: transform, border-radius;
 }
 
 .glow-orb.orb-1 {
     width: 600px; height: 600px;
     background: radial-gradient(circle, var(--gold-primary) 0%, transparent 70%);
-    top: -150px; left: -150px;
-    opacity: 0.2;
+    top: -10%; left: -10%;
+    opacity: 0.5; /* Increased from 0.18 */
+    animation: floatMorph1 25s ease-in-out infinite alternate;
 }
 
 .glow-orb.orb-2 {
     width: 500px; height: 500px;
     background: radial-gradient(circle, var(--gold-secondary) 0%, transparent 70%);
-    bottom: -100px; right: -100px;
-    opacity: 0.15;
+    bottom: -10%; right: -10%;
+    opacity: 0.4; /* Increased from 0.15 */
+    animation: floatMorph2 28s ease-in-out infinite alternate-reverse;
 }
 
 .glow-orb.orb-3 {
     width: 400px; height: 400px;
     background: radial-gradient(circle, #ffffff 0%, var(--gold-primary) 40%, transparent 80%);
     top: 40%; left: 40%;
-    opacity: 0.08;
+    opacity: 0.3; /* Increased from 0.12 */
+    animation: floatMorph3 30s ease-in-out infinite alternate;
+}
+
+/* Ambient Float & Morph Animations */
+@keyframes floatMorph1 {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    33% {
+        transform: translate(50px, 30px) rotate(5deg);
+        border-radius: 40% 60% 60% 40% / 40% 60% 40% 60%;
+    }
+    66% {
+        transform: translate(-30px, 60px) rotate(-5deg);
+        border-radius: 70% 30% 40% 60% / 50% 50% 60% 40%;
+    }
+    100% {
+        transform: translate(20px, -20px) rotate(3deg);
+        border-radius: 50% 50% 50% 50% / 40% 60% 50% 50%;
+    }
+}
+
+@keyframes floatMorph2 {
+    0% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 50%;
+    }
+    50% {
+        transform: translate(-40px, -50px) scale(1.1);
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    }
+    100% {
+        transform: translate(30px, -20px) scale(0.95);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+}
+
+@keyframes floatMorph3 {
+    0% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+    }
+    50% {
+        transform: translate(40px, 40px) scale(1.2);
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+    100% {
+        transform: translate(-40px, -40px) scale(1);
+        border-radius: 50% 50% 50% 50% / 40% 60% 50% 50%;
+    }
 }
 
 /* Custom Cursor Elements */
@@ -134,8 +187,8 @@ body:hover #cursor-outline {
 .left-section {
     width: 45%; 
     position: relative;
-    /* Deep Grey with stronger Gold Glow in center behind statue */
-    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.2) 0%, rgba(10, 10, 10, 0.95) 70%);
+    /* Reduced opacity to let background orbs show through */
+    background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.15) 0%, rgba(10, 10, 10, 0.2) 70%);
     overflow: hidden;
     display: flex;
     flex-direction: column;
