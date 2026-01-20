@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // Setup
 const container = document.getElementById('canvas-container');
@@ -12,26 +13,34 @@ camera.position.set(1.8, 0, 2); // Closer zoom (reduced from 3, 2, 4)
 camera.lookAt(0, 0, 0);
 
 // Renderer setup
+// Renderer setup
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(window.devicePixelRatio); // Limit pixel ratio for performance
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace; // Important for realistic colors
+renderer.toneMapping = THREE.ACESFilmicToneMapping; // Cinematic lighting
+renderer.toneMappingExposure = 0.5; // Darker, moodier exposure (Reduced from 0.8)
 renderer.domElement.style.opacity = '0'; // Start hidden for fade-in
 renderer.domElement.style.transition = 'opacity 1s ease-in-out';
 container.appendChild(renderer.domElement);
 
+// Environment setup (Crucial for realistic PBR materials)
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+
 // -------------------------------------------------------------------------
-// Lighting Setup (Matching Blender "Sun" Settings)
+// Lighting Setup (Dark & Royal Mode) - REDUCED INTENSITY
 // -------------------------------------------------------------------------
 
-// 1. Ambient Light (Base level) - Darker for drama
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // Reduced from 0.2
+// 1. Ambient Light (Barely visible)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.02);
 scene.add(ambientLight);
 
-// 2. Sun 1 (Key Light) - Sharp, Cool highlight
-const sun1 = new THREE.DirectionalLight(0xffffff, 2.5); 
-sun1.position.set(-3, 5, 5); 
+// 2. Sun 1 (Key Light) - Dramatic side lighting, Brighter White
+const sun1 = new THREE.DirectionalLight(0xffffff, 2.0); // Increased from 0.6
+sun1.position.set(-5, 3, 5); 
 sun1.castShadow = true;
 sun1.shadow.mapSize.width = 2048; 
 sun1.shadow.mapSize.height = 2048;
@@ -39,14 +48,14 @@ sun1.shadow.bias = -0.0001;
 sun1.shadow.radius = 4; 
 scene.add(sun1);
 
-// 3. Sun 2 (Fill/Warm Light) - Gold tint for the "Royal" feel
-const sun2 = new THREE.DirectionalLight(0xffd700, 1.5); // Gold
-sun2.position.set(5, 2, 2); 
+// 3. Sun 2 (Fill/Warm Light) - Strong Gold rim/fill (Brighter Yellow)
+const sun2 = new THREE.DirectionalLight(0xffd700, 4.0); // Increased from 2.5
+sun2.position.set(5, 0, 2); // Lower angle for dramatic up-lighting
 sun2.castShadow = true; 
 scene.add(sun2);
 
-// 4. Sun 3 (Rim Light) - Blue/Cool for separation
-const sun3 = new THREE.DirectionalLight(0x4040ff, 1.8);
+// 4. Sun 3 (Rim Light) - Blue separation (Increased Blueness)
+const sun3 = new THREE.DirectionalLight(0x4040ff, 0.8); // Increased from 0.3
 sun3.position.set(0, 5, -5); // Backlight
 scene.add(sun3);
 
@@ -76,9 +85,7 @@ loader.setDRACOLoader( dracoLoader );
 let mixer;
 let loadedModel; // Variable to store model for rotation
 
-// Variables for drag interaction
-let isDragging = false;
-let previousMousePosition = { x: 0, y: 0 };
+
 
 loader.load(
     'public/sculpture_v2.glb',
@@ -106,10 +113,66 @@ loader.load(
             if (node.isMesh) {
                 node.castShadow = true;
                 node.receiveShadow = true;
+                
+                // material setup
+                node.material = new THREE.MeshStandardMaterial({
+                    color: 0x756c60, // Dark grey/black
+                    // color: 0xe1bb8a, // Dark grey/black
+                    roughness: 2,  // Polished marble is smooth
+                    metalness: 0.1,  // Slight metallic hint for reflection
+                    envMapIntensity: 1.0 // Enhance reflections
+                });
             }
         });
 
         scene.add(model);
+
+        // ---------------------------------------------------------
+        // Premium Royal Base (Procedural Podium)
+        // ---------------------------------------------------------
+        const baseRadius = Math.max(boxSize.x, boxSize.z) * 0.55; 
+        const baseHeight = 0.15;
+        const podiumY = (-boxSize.y / 2) - verticalOffset;
+
+        // 1. Polished Black Marble Cylinder
+        const geometryBase = new THREE.CylinderGeometry( baseRadius, baseRadius * 1.05, baseHeight, 64 ); 
+        const materialBase = new THREE.MeshStandardMaterial( { 
+            color: 0x050505, 
+            roughness: 0.1, 
+            metalness: 0.9,
+            envMapIntensity: 1.0
+        } );
+        const cylinderBase = new THREE.Mesh( geometryBase, materialBase );
+        cylinderBase.position.y = podiumY - (baseHeight / 2);
+        cylinderBase.receiveShadow = true;
+        scene.add( cylinderBase );
+
+        // 2. Gold Accent Ring
+        const geometryRing = new THREE.TorusGeometry( baseRadius * 1.02, 0.01, 16, 100 ); 
+        const materialRing = new THREE.MeshStandardMaterial( { 
+            color: 0xffd700, 
+            roughness: 0.1, 
+            metalness: 1.0,
+            emissive: 0x332200
+        } ); 
+        const torusRing = new THREE.Mesh( geometryRing, materialRing );
+        torusRing.rotation.x = Math.PI / 2;
+        torusRing.position.y = podiumY - (baseHeight * 0.2); // Embedded slightly
+        scene.add( torusRing );
+
+        // 3. Subtle Floor Glow Ring
+        const glowRingGeo = new THREE.RingGeometry(baseRadius * 1.4, baseRadius * 1.42, 64);
+        const glowRingMat = new THREE.MeshBasicMaterial( { 
+            color: 0xffd700, 
+            transparent: true, 
+            opacity: 0.15, 
+            side: THREE.DoubleSide,
+            blending: THREE.AdditiveBlending 
+        } );
+        const glowRing = new THREE.Mesh(glowRingGeo, glowRingMat);
+        glowRing.rotation.x = -Math.PI / 2;
+        glowRing.position.y = podiumY - baseHeight + 0.01;
+        scene.add(glowRing);
 
         // Fade in Canvas
         setTimeout(() => {
@@ -122,7 +185,7 @@ loader.load(
             loaderElement.classList.add('fade-out');
             setTimeout(() => {
                 loaderElement.style.display = 'none';
-            }, 500); // Wait for transition to finish
+            }, 800); // Wait for transition to finish
         }
 
         // If the model has animations
@@ -134,57 +197,97 @@ loader.load(
         }
     },
     (xhr) => {
-        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        if (xhr.total > 0) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        } else {
+            console.log('Loading...');
+        }
     },
     (error) => {
         console.error('An error happened', error);
     }
 );
 
-// Mouse Interaction Event Listeners to Rotate Model Only
-renderer.domElement.addEventListener('mousedown', (e) => {
+// Mouse/Touch Interaction with Smooth Inertia
+let targetRotationY = 0;
+let targetRotationX = 0; // Optional if we want vertical tilt
+let mouseX = 0;
+let mouseXOnMouseDown = 0;
+let targetRotationYOnMouseDown = 0;
+
+let windowHalfX = window.innerWidth / 2;
+
+// Velocity for inertia
+let rotationVelocity = 0;
+let isDragging = false;
+let lastMouseX = 0;
+
+function onDocumentMouseDown( event ) {
     isDragging = true;
-});
+    mouseXOnMouseDown = event.clientX - windowHalfX;
+    lastMouseX = event.clientX;
+    
+    // Stop any existing momentum so user catches it
+    rotationVelocity = 0; 
+}
 
-renderer.domElement.addEventListener('mousemove', (e) => {
-    if (isDragging && loadedModel) {
-        const deltaMove = {
-            x: e.offsetX - previousMousePosition.x
-        };
+function onDocumentMouseMove( event ) {
+    if ( isDragging ) {
+        const deltaX = event.clientX - lastMouseX;
+        lastMouseX = event.clientX;
 
-        const rotationSpeed = 0.005;
-        loadedModel.rotation.y += deltaMove.x * rotationSpeed;
+        // Directly rotate for 1:1 feel while dragging
+        // Adjust sensitivity as needed
+        const sensitivity = 0.005;
+        if (loadedModel) {
+            loadedModel.rotation.y += deltaX * sensitivity;
+        }
+
+        // Calculate velocity for momentum on release
+        rotationVelocity = deltaX * sensitivity;
     }
+}
 
-    previousMousePosition = {
-        x: e.offsetX,
-        y: e.offsetY
-    };
-});
-
-renderer.domElement.addEventListener('mouseup', (e) => {
+function onDocumentMouseUp() {
     isDragging = false;
-});
+}
 
-// For touch devices (optional, largely same logic)
-renderer.domElement.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-});
-renderer.domElement.addEventListener('touchmove', (e) => {
-   if (isDragging && loadedModel) {
-        const deltaMove = {
-            x: e.touches[0].clientX - previousMousePosition.x
-        };
-        const rotationSpeed = 0.005;
-        loadedModel.rotation.y += deltaMove.x * rotationSpeed;
+// Touch support
+function onDocumentTouchStart( event ) {
+    if ( event.touches.length === 1 ) {
+        event.preventDefault();
+        isDragging = true;
+        lastMouseX = event.touches[ 0 ].pageX;
+        rotationVelocity = 0;
+    }
+}
+
+function onDocumentTouchMove( event ) {
+    if ( event.touches.length === 1 && isDragging ) {
+        event.preventDefault();
+        const deltaX = event.touches[ 0 ].pageX - lastMouseX;
+        lastMouseX = event.touches[ 0 ].pageX;
         
-        previousMousePosition = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-   } 
-});
-renderer.domElement.addEventListener('touchend', (e) => {
+        const sensitivity = 0.005;
+        if (loadedModel) {
+            loadedModel.rotation.y += deltaX * sensitivity;
+        }
+        rotationVelocity = deltaX * sensitivity;
+    }
+}
+
+function onDocumentTouchEnd() {
     isDragging = false;
-});
+}
+
+// Add listeners to the DOM Element (renderer canvas)
+renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+window.addEventListener( 'mouseup', onDocumentMouseUp, false );
+window.addEventListener( 'touchmove', onDocumentTouchMove, false );
+window.addEventListener( 'touchend', onDocumentTouchEnd, false );
 
 
 // Resize handler
@@ -205,12 +308,20 @@ const clock = new THREE.Clock();
 function animate() {
     requestAnimationFrame(animate);
     
-    const delta = clock.getDelta();
-    if (mixer) mixer.update(delta);
-
-    // Auto-rotate slowly when not dragging (optional, user asked for slow rotation in previous steps)
-    if (loadedModel && !isDragging) {
-        loadedModel.rotation.y += 0.0015; 
+    // Physics-based rotation in animation loop
+    if (loadedModel) {
+        if (!isDragging) {
+            // Apply friction/damping to the velocity
+            rotationVelocity *= 0.95; // 5% friction per frame
+            
+            // Apply the velocity to rotation
+            loadedModel.rotation.y += rotationVelocity;
+            
+            // Add a very subtle constant auto-rotation if momentum has stopped
+            if (Math.abs(rotationVelocity) < 0.0001) {
+                loadedModel.rotation.y += 0.0005; // Gentle Drift
+            }
+        }
     }
     
     renderer.render(scene, camera);
