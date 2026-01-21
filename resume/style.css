@@ -551,22 +551,6 @@ body {
       color: #000 !important;
   }
 
-  .section-title i {
-    color: #0056b3 !important;
-    border-color: #0056b3 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important; /* Ensure it doesn't shrink */
-    font-size: 14px !important;
-    padding: 0 !important;
-    border-width: 1.5px !important; /* Make border slightly clearer */
-    margin-top: 0 !important;
-    box-sizing: border-box !important;
-  }
-
   .timeline-content li::before {
     color: #0056b3 !important;
   }
@@ -679,13 +663,45 @@ body {
     }
 
   .resume-header {
-      border-bottom: 1px solid #eaeaea;
-      padding-bottom: 1.5rem;
-      margin-bottom: 2rem;
+      border-bottom: none !important;
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.5rem;
+  }
+
+  /* Professional Name typography */
+  h1 {
+      color: #003366 !important; /* Dark Navy */
+      font-size: 2.2rem !important;
+      letter-spacing: 0.05em !important;
+      margin-bottom: 0.5rem !important;
+  }
+
+  /* Divider Lines for Sections */
+  .section-title {
+      color: #003366 !important;
+      border-bottom: 1px solid #f0f0f0; /* The professional divider */
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      width: 100%;
+  }
+
+  .section-title i {
+      /* Remove circle for cleaner professional look */
+      color: #003366 !important; /* Professional Navy */
+      border: none !important;
+      background: none !important;
+      width: auto !important;
+      height: auto !important;
+      font-size: 1.1rem !important;
+      margin-right: 0.5rem !important;
+      margin-top: -2px !important; /* Optical adjust */
+      display: inline-block !important;
+      padding: 0 !important;
   }
   
   .resume-contact a {
       color: #004494 !important; /* Dark blue for links */
+      font-weight: 500 !important;
   }
 
   /* Page Breaks */
