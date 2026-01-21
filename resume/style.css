@@ -678,6 +678,16 @@ body {
         display: none !important; /* Optional: hide icon if overly visual, but user didn't ask explicitly. keeping simpler. */
     }
 
+  .resume-header {
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+  }
+  
+  .resume-contact a {
+      color: #004494 !important; /* Dark blue for links */
+  }
+
   /* Page Breaks */
   /* Page Breaks */
   .timeline-item,
